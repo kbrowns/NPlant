@@ -1,0 +1,315 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETFramework,Version=v4.7": {
+      "NUnit/3.10.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/nunit.framework.dll": {}
+        },
+        "runtime": {
+          "lib/net45/nunit.framework.dll": {}
+        },
+        "build": {
+          "build/NUnit.props": {}
+        }
+      },
+      "NPlant/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/NPlant.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NPlant.dll": {}
+        }
+      },
+      "NPlant.Console/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "NPlant": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/NPlant.Console.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NPlant.Console.dll": {}
+        }
+      },
+      "NPlant.Samples/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "NPlant": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/NPlant.Samples.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NPlant.Samples.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.7/win": {
+      "NUnit/3.10.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/nunit.framework.dll": {}
+        },
+        "runtime": {
+          "lib/net45/nunit.framework.dll": {}
+        },
+        "build": {
+          "build/NUnit.props": {}
+        }
+      },
+      "NPlant/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/NPlant.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NPlant.dll": {}
+        }
+      },
+      "NPlant.Console/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "NPlant": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/NPlant.Console.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NPlant.Console.dll": {}
+        }
+      },
+      "NPlant.Samples/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "NPlant": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/NPlant.Samples.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NPlant.Samples.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.7/win-x64": {
+      "NUnit/3.10.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/nunit.framework.dll": {}
+        },
+        "runtime": {
+          "lib/net45/nunit.framework.dll": {}
+        },
+        "build": {
+          "build/NUnit.props": {}
+        }
+      },
+      "NPlant/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/NPlant.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NPlant.dll": {}
+        }
+      },
+      "NPlant.Console/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "NPlant": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/NPlant.Console.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NPlant.Console.dll": {}
+        }
+      },
+      "NPlant.Samples/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "NPlant": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/NPlant.Samples.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NPlant.Samples.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.7/win-x86": {
+      "NUnit/3.10.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/nunit.framework.dll": {}
+        },
+        "runtime": {
+          "lib/net45/nunit.framework.dll": {}
+        },
+        "build": {
+          "build/NUnit.props": {}
+        }
+      },
+      "NPlant/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/NPlant.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NPlant.dll": {}
+        }
+      },
+      "NPlant.Console/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "NPlant": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/NPlant.Console.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NPlant.Console.dll": {}
+        }
+      },
+      "NPlant.Samples/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "NPlant": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/NPlant.Samples.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NPlant.Samples.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "NUnit/3.10.1": {
+      "sha512": "E3ii6+VLdeIxTQ5gPjk/7g/xl+aCifbfcIkiGayZCuos+22FEdtKGrxMe6SzoXCQCcL7gdqhfNIFTaZ1+dS18g==",
+      "type": "package",
+      "path": "nunit/3.10.1",
+      "files": [
+        "CHANGES.md",
+        "LICENSE.txt",
+        "NOTICES.txt",
+        "build/NUnit.props",
+        "lib/net20/NUnit.System.Linq.dll",
+        "lib/net20/nunit.framework.dll",
+        "lib/net20/nunit.framework.pdb",
+        "lib/net20/nunit.framework.xml",
+        "lib/net35/nunit.framework.dll",
+        "lib/net35/nunit.framework.pdb",
+        "lib/net35/nunit.framework.xml",
+        "lib/net40/nunit.framework.dll",
+        "lib/net40/nunit.framework.pdb",
+        "lib/net40/nunit.framework.xml",
+        "lib/net45/nunit.framework.dll",
+        "lib/net45/nunit.framework.pdb",
+        "lib/net45/nunit.framework.xml",
+        "lib/netstandard1.6/nunit.framework.dll",
+        "lib/netstandard1.6/nunit.framework.pdb",
+        "lib/netstandard1.6/nunit.framework.xml",
+        "lib/netstandard2.0/nunit.framework.dll",
+        "lib/netstandard2.0/nunit.framework.pdb",
+        "lib/netstandard2.0/nunit.framework.xml",
+        "nunit.3.10.1.nupkg.sha512",
+        "nunit.nuspec"
+      ]
+    },
+    "NPlant/1.0.0": {
+      "type": "project",
+      "path": "../NPlant/NPlant.csproj",
+      "msbuildProject": "../NPlant/NPlant.csproj"
+    },
+    "NPlant.Console/1.0.0": {
+      "type": "project",
+      "path": "../NPlant.Console/NPlant.Console.csproj",
+      "msbuildProject": "../NPlant.Console/NPlant.Console.csproj"
+    },
+    "NPlant.Samples/1.0.0": {
+      "type": "project",
+      "path": "../NPlant.Samples/NPlant.Samples.csproj",
+      "msbuildProject": "../NPlant.Samples/NPlant.Samples.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETFramework,Version=v4.7": [
+      "NPlant >= 1.0.0",
+      "NPlant.Console >= 1.0.0",
+      "NPlant.Samples >= 1.0.0",
+      "NUnit >= 3.10.1"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\brok02\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\brok02\\_github\\nplant\\Src\\NPlant.Tests\\NPlant.Tests.csproj",
+      "projectName": "NPlant.Tests",
+      "projectPath": "C:\\Users\\brok02\\_github\\nplant\\Src\\NPlant.Tests\\NPlant.Tests.csproj",
+      "packagesPath": "C:\\Users\\brok02\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\brok02\\_github\\nplant\\Src\\NPlant.Tests\\obj\\",
+      "projectStyle": "PackageReference",
+      "skipContentFileWrite": true,
+      "configFilePaths": [
+        "C:\\Users\\brok02\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net47"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net47": {
+          "projectReferences": {
+            "C:\\Users\\brok02\\_github\\nplant\\Src\\NPlant.Console\\NPlant.Console.csproj": {
+              "projectPath": "C:\\Users\\brok02\\_github\\nplant\\Src\\NPlant.Console\\NPlant.Console.csproj"
+            },
+            "C:\\Users\\brok02\\_github\\nplant\\Src\\NPlant.Samples\\NPlant.Samples.csproj": {
+              "projectPath": "C:\\Users\\brok02\\_github\\nplant\\Src\\NPlant.Samples\\NPlant.Samples.csproj"
+            },
+            "C:\\Users\\brok02\\_github\\nplant\\Src\\NPlant\\NPlant.csproj": {
+              "projectPath": "C:\\Users\\brok02\\_github\\nplant\\Src\\NPlant\\NPlant.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "allWarningsAsErrors": true
+      }
+    },
+    "frameworks": {
+      "net47": {
+        "dependencies": {
+          "NUnit": {
+            "target": "Package",
+            "version": "[3.10.1, )"
+          }
+        }
+      }
+    },
+    "runtimes": {
+      "win": {
+        "#import": []
+      },
+      "win-x64": {
+        "#import": []
+      },
+      "win-x86": {
+        "#import": []
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+C:\Users\brok02\_github\nplant\Src\NPlant.Console\obj\Debug\NPlant.Console.csprojAssemblyReference.cache
+C:\Users\brok02\_github\nplant\Src\NPlant.Console\obj\Debug\NPlant.Console.csproj.CoreCompileInputs.cache
+C:\Users\brok02\_github\nplant\Src\NPlant.Console\obj\Debug\NPlant.Console.csproj.CopyComplete
+C:\Users\brok02\_github\nplant\bin\Debug\NPlant.Console.exe.config
+C:\Users\brok02\_github\nplant\bin\Debug\NPlant.Console.exe
+C:\Users\brok02\_github\nplant\bin\Debug\NPlant.Console.pdb
+C:\Users\brok02\_github\nplant\Src\NPlant.Console\obj\Debug\NPlant.Console.exe
+C:\Users\brok02\_github\nplant\Src\NPlant.Console\obj\Debug\NPlant.Console.pdb
