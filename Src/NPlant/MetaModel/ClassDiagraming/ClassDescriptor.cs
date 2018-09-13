@@ -38,7 +38,7 @@ namespace NPlant.MetaModel.ClassDiagraming
 
             if (!this.MetaModel.Hidden)
             {
-                foreach (ClassMemberDescriptor member in this.Members.InnerList)
+                foreach (ClassMemberDescriptor member in this.Members)
                 {
                     if (this.MetaModel.TreatAllMembersAsPrimitives)
                         member.TreatAsPrimitive = true;

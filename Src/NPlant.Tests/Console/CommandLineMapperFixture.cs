@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Drawing.Imaging;
 using NPlant.Console;
-using NPlant.Console.Exceptions;
+using NPlant.Exceptions;
 using NUnit.Framework;
 
 namespace NPlant.Tests.Console
@@ -15,18 +15,18 @@ namespace NPlant.Tests.Console
         [TestCase("-foo:bar")]
         public void Invalid_Arg_Syntax_Should_Throw(string invalidArg)
         {
-            Assert.Throws<ConsoleUsageException>(() =>
+            Assert.Throws<NPlantConsoleUsageException>(() =>
             {
                 var subject = new StringsSubject();
-                CommandLineMapper.Map(subject, new[] { invalidArg });
+                CommandLineMapper.Map(subject, new string[0],  new[] { invalidArg });
             });
         }
 
         [Test]
-        public void Can_Handle_Path_Values()
+        public void Can_Handle_Path_Values_As_Options()
         {
             var subject = new StringsSubject();
-            CommandLineMapper.Map(subject, new[] { "--foo:\"C:\\a\\b c\\d\"", "--bar:barrrr" });
+            CommandLineMapper.Map(subject, new string[0],  new[] { "--foo:\"C:\\a\\b c\\d\"", "--bar:barrrr" });
             Assert.That(subject.Foo, Is.EqualTo("C:\\a\\b c\\d"));
             Assert.That(subject.Bar, Is.EqualTo("barrrr"));
         }
@@ -34,20 +34,20 @@ namespace NPlant.Tests.Console
         [Test]
         public void Invalid_Arg_Value_Should_Throw()
         {
-            Assert.Throws<ConsoleUsageException>(() =>
+            Assert.Throws<NPlantConsoleUsageException>(() =>
             {
                 var subject = new ComplexConverterSubject();
-                CommandLineMapper.Map(subject, new[] { "--foo:bar" });
+                CommandLineMapper.Map(subject, new string[0],  new[] { "--foo:bar" });
             }, "Argument '--foo' has an invalid value 'bar'");
         }
 
         [Test]
         public void Missing_Required_Value_Should_Throw()
         {
-            Assert.Throws<ConsoleUsageException>(() =>
+            Assert.Throws<NPlantConsoleUsageException>(() =>
             {
-                var subject = new RequiredSubject();
-                CommandLineMapper.Map(subject, new string[] { });
+                var subject = new ArgumentSubject();
+                CommandLineMapper.Map(subject, new string[0],  new string[] { });
             }, "Expected argument '--foo', but was not received");
         }
 
@@ -55,7 +55,7 @@ namespace NPlant.Tests.Console
         public void Can_Map_Strings()
         {
             var subject = new StringsSubject();
-            CommandLineMapper.Map(subject, new[] { "--foo:bar", "--bar:baz" });
+            CommandLineMapper.Map(subject, new string[0], new[] { "--foo:bar", "--bar:baz" });
             Assert.That(subject.Foo, Is.EqualTo("bar"));
             Assert.That(subject.Bar, Is.EqualTo("baz"));
             Assert.That(subject.Baz, Is.False);
@@ -65,17 +65,17 @@ namespace NPlant.Tests.Console
         public void Can_Map_Booleans_Switch_Or_Value()
         {
             var subject = new BooleansSubject();
-            CommandLineMapper.Map(subject, new[] { "--foo"});
+            CommandLineMapper.Map(subject, new string[0], new[] { "--foo"});
             Assert.That(subject.Foo, Is.True);
             Assert.That(subject.Bar, Is.Null);
             Assert.That(subject.Baz, Is.False);
 
-            CommandLineMapper.Map(subject, new[] { "--foo:true" });
+            CommandLineMapper.Map(subject, new string[0], new[] { "--foo:true" });
             Assert.That(subject.Foo, Is.True);
             Assert.That(subject.Bar, Is.Null);
             Assert.That(subject.Baz, Is.False);
 
-            CommandLineMapper.Map(subject, new[] { "--foo:false" });
+            CommandLineMapper.Map(subject, new string[0], new[] { "--foo:false" });
             Assert.That(subject.Foo, Is.False);
             Assert.That(subject.Bar, Is.Null);
             Assert.That(subject.Baz, Is.False);
@@ -85,17 +85,17 @@ namespace NPlant.Tests.Console
         public void Can_Map_Nullable_Booleans()
         {
             var subject = new BooleansSubject();
-            CommandLineMapper.Map(subject, new[] { "--bar" });
+            CommandLineMapper.Map(subject, new string[0], new[] { "--bar" });
             Assert.That(subject.Foo, Is.False);
             Assert.That(subject.Bar.GetValueOrDefault(), Is.True);
             Assert.That(subject.Baz, Is.False);
 
-            CommandLineMapper.Map(subject, new[] { "--bar:true" });
+            CommandLineMapper.Map(subject, new string[0], new[] { "--bar:true" });
             Assert.That(subject.Foo, Is.False);
             Assert.That(subject.Bar.GetValueOrDefault(), Is.True);
             Assert.That(subject.Baz, Is.False);
 
-            CommandLineMapper.Map(subject, new[] { "--bar:false" });
+            CommandLineMapper.Map(subject, new string[0], new[] { "--bar:false" });
             Assert.That(subject.Foo, Is.False);
             Assert.That(subject.Bar.GetValueOrDefault(), Is.False);
             Assert.That(subject.Baz, Is.False);
@@ -105,15 +105,15 @@ namespace NPlant.Tests.Console
         public void Can_Map_Complex_Converters()
         {
             var subject = new ComplexConverterSubject();
-            CommandLineMapper.Map(subject, new []{"--foo:Png"});
+            CommandLineMapper.Map(subject, new string[0], new []{"--foo:Png"});
 
             Assert.That(subject.Foo, Is.EqualTo(ImageFormat.Png));
 
-            CommandLineMapper.Map(subject, new[] { "--foo:Jpeg" });
+            CommandLineMapper.Map(subject, new string[0], new[] { "--foo:Jpeg" });
 
             Assert.That(subject.Foo, Is.EqualTo(ImageFormat.Jpeg));
 
-            CommandLineMapper.Map(subject, new[] { "--foo:gif" });
+            CommandLineMapper.Map(subject, new string[0], new[] { "--foo:gif" });
 
             Assert.That(subject.Foo, Is.EqualTo(ImageFormat.Gif));
         }
@@ -132,9 +132,9 @@ namespace NPlant.Tests.Console
             public bool Baz { get; protected set; }
         }
 
-        public class RequiredSubject
+        public class ArgumentSubject
         {
-            [RequiredArgument]
+            [Argument(1)]
             public string Foo { get; protected set; }
             public string Bar { get; protected set; }
             public bool Baz { get; protected set; }

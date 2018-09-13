@@ -47,8 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Console\CommandLineArgsFixture.cs" />
+    <Compile Include="Console\CommandLineCommandFixture.cs" />
     <Compile Include="Console\CommandLineMapperFixture.cs" />
+    <Compile Include="Console\CommandLineModelFixture.cs" />
+    <Compile Include="Console\DiagramListCommandFixture.cs" />
     <Compile Include="Core\KeyedListFixture.cs" />
     <Compile Include="Core\TypeMetaModelFixture.cs" />
     <Compile Include="Diagraming\ClassDescriptor_MemberScan_Fixture.cs" />

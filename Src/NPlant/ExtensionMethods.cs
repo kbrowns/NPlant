@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -9,8 +10,10 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using NPlant.Core;
+using NPlant.Exceptions;
 using NPlant.Generation.ClassDiagraming;
 using NPlant.MetaModel.ClassDiagraming;
 
@@ -68,7 +71,7 @@ public static class ExtensionMethods
 
     public static ClassDescriptor GetDescriptor(this Type type, ClassDiagramVisitorContext context)
     {
-        ClassDescriptor firstOrDefault = context.Diagram.RootClasses.InnerList.FirstOrDefault(x => x.ReflectedType == type);
+        ClassDescriptor firstOrDefault = context.Diagram.RootClasses.FirstOrDefault(x => x.ReflectedType == type);
         if (firstOrDefault != null)
         {
             return firstOrDefault;
@@ -176,7 +179,24 @@ public static class ExtensionMethods
 
         return attributes != null && attributes.Length > 0;
     }
-    
+
+    public static void SetConvertedValue(this PropertyInfo property, object instance, string value)
+    {
+        var converter = TypeDescriptor.GetConverter(property.PropertyType);
+
+        try
+        {
+            if (value.StartsWith("\"") && value.EndsWith("\""))
+                value = value.Substring(1, value.Length - 2);
+
+            property.SetValue(instance, converter.ConvertFromInvariantString(value), null);
+        }
+        catch
+        {
+            throw new NPlantConsoleUsageException($"Property '{property.Name}' on type '{property.DeclaringType}' cannot be set with value '{value}'.");
+        }
+    }
+
     public static bool HasAttribute<T>(this FieldInfo field, bool inherit = false) where T : Attribute
     {
         var attributes = field.GetAttributesOf<T>(inherit);
@@ -288,6 +308,37 @@ public static class ExtensionMethods
 
         info = null;
         return false;
+    }
+
+    public static T InstantiateAs<T>(this Type type, params object[] args) where T : class
+    {
+        if (args == null)
+            args = new object[0];
+
+        if (type.TryGetPublicParameterlessConstructor(out var info))
+        {
+            T instance = info.Invoke(args) as T;
+
+            if (instance == null)
+                throw new NPlantException($"The constructed object is an unrecognized type - expected {typeof(T)} but was {info.DeclaringType}");
+
+            return instance;
+        }
+
+        throw new NPlantException($"Type ${type.FullName} does not have a parameter-less constructor");
+    }
+
+    public static string[] SplitOnPascalCasing(this string s)
+    {
+        if (s.IsNullOrEmpty())
+            return new string[0];
+
+        var result = Regex.Matches(s, @"[A-Z]+(?=[A-Z][a-z]+)|\d|[A-Z][a-z]+").Cast<Match>().Select(m => m.Value).ToArray();
+
+        if (result.Length < 1 && s.Length > 0)
+            result = new[]{s};
+
+        return result;
     }
 
     public static bool IsWithin(this int value, int lower, int upper)

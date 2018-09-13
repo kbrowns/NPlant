@@ -1,16 +1,14 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using NPlant.MetaModel.ClassDiagraming;
 
 namespace NPlant.Core
 {
-    public class KeyedList<T> where T : class, IKeyedItem
+    public class KeyedList<T> : IEnumerable<T>
+        where T : class, IKeyedItem
     {
         private readonly IList<T> _innerList = new List<T>();
-
-        internal IList<T> InnerList
-        {
-            get { return _innerList; }
-        }
 
         public int Count
         {
@@ -109,6 +107,21 @@ namespace NPlant.Core
         public bool ContainsKey(string key)
         {
             return _innerList.Any(innerItem => key == innerItem.Key);
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return _innerList.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public bool Contains(T child)
+        {
+            return _innerList.Contains(child);
         }
     }
 

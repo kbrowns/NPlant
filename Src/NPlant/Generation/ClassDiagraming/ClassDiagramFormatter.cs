@@ -68,7 +68,7 @@ namespace NPlant.Generation.ClassDiagraming
 
         private void WriteRootClasses(Dictionary<string, List<string>> packageMap, List<string> unpackaged)
         {
-            foreach (var rootClass in _diagram.RootClasses.InnerList)
+            foreach (var rootClass in _diagram.RootClasses)
             {
                 string classDefinition = WriteClassDefinition(rootClass);
 

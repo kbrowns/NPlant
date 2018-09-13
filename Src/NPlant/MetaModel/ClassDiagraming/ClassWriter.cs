@@ -30,11 +30,11 @@ namespace NPlant.MetaModel.ClassDiagraming
             else 
                 buffer.AppendLine(string.Format("    class \"{0}\"{1} {2}", _class.Name, color, "{"));
 
-            var definedMembers = _class.Members.InnerList.Where(x => !x.IsInherited).OrderBy(x => x.Name).ToArray();
+            var definedMembers = _class.Members.Where(x => !x.IsInherited).OrderBy(x => x.Name).ToArray();
 
             if (!IsBaseClassVisible(_class, context))
             {
-                var inheritedMembers = _class.Members.InnerList.Where(x => x.IsInherited).OrderBy(x => x.Name).ToArray();
+                var inheritedMembers = _class.Members.Where(x => x.IsInherited).OrderBy(x => x.Name).ToArray();
                 WriteClassMembers(inheritedMembers, buffer);
 
                 if (definedMembers.Length > 0 && inheritedMembers.Length > 0)
@@ -44,7 +44,7 @@ namespace NPlant.MetaModel.ClassDiagraming
             }
 
             WriteClassMembers(definedMembers, buffer);
-            WriteClassMethods(_class.Methods.InnerList, buffer);
+            WriteClassMethods(_class.Methods, buffer);
 
             buffer.AppendLine("    }");
 
@@ -60,7 +60,7 @@ namespace NPlant.MetaModel.ClassDiagraming
         }
         private bool IsBaseClassVisible(ClassDescriptor @class, ClassDiagramVisitorContext context)
         {
-            if (_diagram.RootClasses.InnerList.Any(x => x.ReflectedType == @class.ReflectedType.BaseType))
+            if (_diagram.RootClasses.Any(x => x.ReflectedType == @class.ReflectedType.BaseType))
                 return true;
 
             if (context.VisitedRelatedClasses.Any(x => x.ReflectedType == @class.ReflectedType.BaseType))

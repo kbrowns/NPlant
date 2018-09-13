@@ -13,7 +13,7 @@ namespace NPlant.Generation
     {
         private readonly string _javaPath;
         private readonly PlantUmlInvocation _invocation;
-        private Action<string> _logger = Console.WriteLine;
+        private Action<string> _logger = System.Console.WriteLine;
 
         public NPlantImage(string javaPath, PlantUmlInvocation invocation)
         {
@@ -49,8 +49,6 @@ namespace NPlant.Generation
                             },
                         EnableRaisingEvents = true
                     };
-
-                Logger(" * generating diagram {0}...".FormatWith(diagramName));
 
                 bool started = process.Start();
 
@@ -112,7 +110,6 @@ namespace NPlant.Generation
         {
             var image = Create(modelDiagramText, modelDiagramName);
             image.Save(path, format);
-            Logger(" * diagram saved to {0}.".FormatWith(path));
         }
     }
 }

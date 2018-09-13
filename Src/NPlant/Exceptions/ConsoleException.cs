@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NPlant.Console.Exceptions
+namespace NPlant.Exceptions
 {
     public class ConsoleException : Exception
     {

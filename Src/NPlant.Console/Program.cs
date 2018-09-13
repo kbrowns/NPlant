@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using NPlant.Console.Exceptions;
-using NPlant.Core;
-using NPlant.Generation;
-using NPlant.Generation.ClassDiagraming;
+using NPlant.Exceptions;
 using Con=System.Console;
 
 namespace NPlant.Console
@@ -18,67 +10,65 @@ namespace NPlant.Console
     {
         static int Main(string[] args)
         {
+            CommandLineCommand command = null;
 
             try
             {
-                var arguments = new CommandLineArgs(args);
+                CommandLineModel model = CommandLineModel.Parse(args);
 
-                string jarPath = arguments.Jar;
-
-                if (jarPath.IsNullOrEmpty())
-                    jarPath = PlantUmlJarDownloader.Download(ConsoleEnvironment.ExecutionDirectory);
-
-                if (arguments.Debugger)
+                if (model.Debugger)
                 {
                     Debugger.Launch();
                     Debugger.Break();
                 }
 
-                var assemblyLoader = new NPlantAssemblyLoader();
-                Assembly assembly = assemblyLoader.Load(arguments.Assembly);
+                command = model.CreateCommand();
+                CommandLineMapper.Map(command, model.Arguments.ToArray(), model.Options);
 
-                var diagramLoader = new NPlantDiagramLoader();
-
-                var diagrams = diagramLoader.Load(assembly);
-
-                IEnumerable<DiscoveredDiagram> matchingDiagrams = diagrams;
-
-                if(! arguments.Diagram.IsNullOrEmpty())
-                    matchingDiagrams = matchingDiagrams.Where(diagram => diagram.Diagram.Name.StartsWith(arguments.Diagram));
-
-                foreach (var matchingDiagram in matchingDiagrams)
+                if (command.Help)
                 {
-                    string diagramText = BufferedClassDiagramGenerator.GetDiagramText(matchingDiagram.Diagram);
-                    ImageFileGenerationModel model = new ImageFileGenerationModel(diagramText, matchingDiagram.Diagram.Name, arguments.Java, jarPath);
-
-                    DirectoryInfo outputDirectory = new DirectoryInfo(arguments.Output);
-
-                    if (!outputDirectory.Exists)
-                        outputDirectory.Create();
-
-                    string path = Path.Combine(outputDirectory.FullName, $"{model.DiagramName}.{arguments.Format}");
-                    ImageFormat format = arguments.GetImageFormat();
-
-                    if (format == null)
+                    foreach (var line in command.Usage())
                     {
-                        File.WriteAllText(path, diagramText);
+                        Con.WriteLine(line);
                     }
-                    else
-                    {
-                        NPlantImage nplantImage = new NPlantImage(model.JavaPath, model.Invocation);
-                        nplantImage.Save(model.DiagramText, model.DiagramName, path, format);
-                    }
+
+                    return 0;
+                }
+                else
+                {
+                    return command.Run();
                 }
 
-                return 0;
             }
-            catch (ConsoleUsageException usageException)
+            catch (NPlantConsoleUsageException usageException)
             {
-                Con.WriteLine("Fatal Error:");
+                Con.WriteLine("Usage Error:");
                 Con.WriteLine(usageException.Message);
                 Con.WriteLine();
-                Con.WriteLine("NPlant.Console.exe Usage");
-                Con.WriteLine("------------------------");
+
+                if (command == null)
+                {
+                    Con.WriteLine("Available command:");
+
+                    foreach(var commandType in CommandLineCommand.AvailableCommandTypes)
+                    {
+                        var parts = commandType.Name.SplitOnPascalCasing();
+                        
+                        if (string.Equals(parts[parts.Length -1], "Command", StringComparison.CurrentCultureIgnoreCase) )
+                            parts[parts.Length - 1] = "";
+
+                        string commandName = string.Join(" ", parts);
+
+                        Con.WriteLine($"NPlant.Console.exe {commandName.ToLower()}");
+                    }
+                }
+                else
+                {
+                    foreach (var line in command.Usage())
+                    {
+                        Con.WriteLine(line);
+                    }
+                }
             }
             catch (Exception consoleException)
             {

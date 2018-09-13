@@ -60,7 +60,7 @@ namespace NPlant.Generation.ClassDiagraming
             if (_unvisitedRelatedClasses.Contains(child))
                 return true;
             
-            if (this.Diagram.RootClasses.InnerList.Contains(child))
+            if (this.Diagram.RootClasses.Contains(child))
                 return true;
 
             return false;

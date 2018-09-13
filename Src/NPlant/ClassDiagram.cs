@@ -78,7 +78,7 @@ namespace NPlant
         {
             this.AddAssemblyOf<T>();
 
-            foreach (var assembly in _assemblyDescriptors.InnerList)
+            foreach (var assembly in _assemblyDescriptors)
             {
                 var types = assembly.Assembly.GetTypesExtending<T>();
 

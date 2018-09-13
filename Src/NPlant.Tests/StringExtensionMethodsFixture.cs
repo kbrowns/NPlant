@@ -6,6 +6,23 @@ namespace NPlant.Tests
     [TestFixture]
     public class StringExtensionMethodsFixture
     {
+        [TestCase("FooBarBaz", "Foo", "Bar", "Baz")]
+        [TestCase("Foo", "Foo")]
+        [TestCase("FBB", "FBB")]
+        [TestCase("FBBaz", "FB", "Baz")]
+        public void SplitOnPascalCasing_Suite(string subject, params object[] parameters)
+        {
+            string[] expected = string.Join(" ", parameters).Split(' ');
+            string[] actual = subject.SplitOnPascalCasing();
+
+            Assert.That(actual.Length, Is.EqualTo(expected.Length), $"Actual array ({actual.Length}): {string.Join(", ", actual)}; Expected array ({expected.Length}): {string.Join(", ", expected)}");
+
+            for (var index = 0; index < expected.Length; index++)
+            {
+                Assert.That(actual[index], Is.EqualTo(expected[index]));
+            }
+        }
+
         [TestCase("abcdefghijk", "g", "abcdef")]
         [TestCase("abcdefghijk", "k", "abcdefghij")]
         [TestCase("abcdefghijk", "a", "")]

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using NPlant.Core;
+using NPlant.Exceptions;
 
 namespace NPlant.Generation
 {
@@ -20,11 +21,7 @@ namespace NPlant.Generation
         {
             _recorder.Log("Starting Stage: Assembly Load (assembly={0})...".FormatWith(path));
 
-            path.CheckForNull(() => new NPlantException("An 'assembly' attribute is required."));
-
-            string loadMessage;
-
-            Assembly assembly = LoadAssembly(path, out loadMessage);
+            Assembly assembly = LoadAssembly(path, out var loadMessage);
 
             assembly.CheckForNull(
                 () =>
