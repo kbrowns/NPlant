@@ -3,9 +3,9 @@ using Con=System.Console;
 
 namespace NPlant.Console
 {
-    public class DiagramsListCommand : CommandLineCommand
+    public class DiagramsListCommand : CliCommand
     {
-        [Argument(1)]
+        [CliArgument(1)]
         public string Assembly { get; set; }
 
         public override int Run()

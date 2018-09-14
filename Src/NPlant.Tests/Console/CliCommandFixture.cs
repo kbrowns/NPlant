@@ -5,12 +5,12 @@ using NUnit.Framework;
 namespace NPlant.Tests.Console
 {
     [TestFixture]
-    public class CommandLineCommandFixture
+    public class CliCommandFixture
     {
         [Test]
         public void AvailableCommandTypes_Should_Return_Types()
         {
-            Assert.That(CommandLineCommand.AvailableCommandTypes.ToArray().Length, Is.GreaterThan(0));
+            Assert.That(CliCommand.AvailableCommandTypes.ToArray().Length, Is.GreaterThan(0));
         }
     }
 }

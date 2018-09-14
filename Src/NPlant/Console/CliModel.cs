@@ -6,19 +6,19 @@ using NPlant.Exceptions;
 
 namespace NPlant.Console
 {
-    public class CommandLineModel
+    public class CliModel
     {
         private List<string> _arguments = new List<string>();
         private readonly List<string> _options = new List<string>();
 
-        private CommandLineModel()
+        private CliModel()
         {
 
         }
 
-        public static CommandLineModel Parse(string[] args)
+        public static CliModel Parse(string[] args)
         {
-            var model = new CommandLineModel();
+            var model = new CliModel();
 
             foreach (var arg in args)
             {
@@ -37,13 +37,13 @@ namespace NPlant.Console
 
         public IEnumerable<string> Arguments => _arguments;
 
-        public CommandLineCommand CreateCommand()
+        public CliCommand CreateCommand()
         {
             var matchedType = FindCommandType(_arguments.ToArray(), out var commandArgs);
             _arguments = new List<string>();
             _arguments.AddRange(commandArgs);
 
-            return matchedType.InstantiateAs<CommandLineCommand>();
+            return matchedType.InstantiateAs<CliCommand>();
         }
 
         public static Type FindCommandType(string[] arguments, out string[] commandArguments)
@@ -60,12 +60,12 @@ namespace NPlant.Console
                 possibilities.Push(new Tuple<string, ArraySegment<string>>(string.Join("", commandName), commandArgs));
             }
 
-            var types = typeof(CommandLineCommand).Assembly.GetExportedTypes();
+            var types = typeof(CliCommand).Assembly.GetExportedTypes();
 
             while (possibilities.Count > 0)
             {
                 var candidate = possibilities.Pop();
-                var expected = $"{typeof(CommandLineCommand).Namespace}.{candidate.Item1}Command";
+                var expected = $"{typeof(CliCommand).Namespace}.{candidate.Item1}Command";
 
                 var matchedType = types.FirstOrDefault(x =>
                     string.Equals(x.FullName, expected, StringComparison.InvariantCultureIgnoreCase));

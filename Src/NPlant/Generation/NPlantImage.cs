@@ -6,6 +6,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
 using NPlant.Core;
+using NPlant.Exceptions;
 
 namespace NPlant.Generation
 {
@@ -106,10 +107,16 @@ namespace NPlant.Generation
             return buffer.ToString();
         }
 
-        public void Save(string modelDiagramText, string modelDiagramName, string path, ImageFormat format)
+        public void Save(string modelDiagramText, string modelDiagramName, string path, string format)
         {
+            var converter = TypeDescriptor.GetConverter(typeof(ImageFormat));
+            var imageFormat = (ImageFormat)converter.ConvertFromInvariantString(format);
+
+            if (imageFormat == null)
+                throw new NPlantConsoleUsageException($"Unrecognized format '{format}' - could not convert into type ImageFormat.");
+
             var image = Create(modelDiagramText, modelDiagramName);
-            image.Save(path, format);
+            image.Save(path, imageFormat);
         }
     }
 }

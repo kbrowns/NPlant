@@ -2,13 +2,15 @@
 
 namespace NPlant.Console
 {
-    public class ArgumentAttribute : Attribute
+    public class CliArgumentAttribute : Attribute
     {
-        public ArgumentAttribute(int order)
+        public CliArgumentAttribute(int order)
         {
             this.Order = order;
         }
 
         public int Order { get; private set; }
+
+        public string[] Allowed { get; set; }
     }
 }

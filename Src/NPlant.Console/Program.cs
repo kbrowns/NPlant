@@ -10,11 +10,11 @@ namespace NPlant.Console
     {
         static int Main(string[] args)
         {
-            CommandLineCommand command = null;
+            CliCommand command = null;
 
             try
             {
-                CommandLineModel model = CommandLineModel.Parse(args);
+                CliModel model = CliModel.Parse(args);
 
                 if (model.Debugger)
                 {
@@ -23,7 +23,7 @@ namespace NPlant.Console
                 }
 
                 command = model.CreateCommand();
-                CommandLineMapper.Map(command, model.Arguments.ToArray(), model.Options);
+                CliMapper.Map(command, model.Arguments.ToArray(), model.Options);
 
                 if (command.Help)
                 {
@@ -50,7 +50,7 @@ namespace NPlant.Console
                 {
                     Con.WriteLine("Available command:");
 
-                    foreach(var commandType in CommandLineCommand.AvailableCommandTypes)
+                    foreach(var commandType in CliCommand.AvailableCommandTypes)
                     {
                         var parts = commandType.Name.SplitOnPascalCasing();
                         

@@ -6,9 +6,9 @@ using NPlant.Exceptions;
 
 namespace NPlant.Console
 {
-    public static class CommandLineMapper
+    public static class CliMapper
     {
-        public static void Map(CommandLineCommand instance, string[] arguments, IEnumerable<string> options)
+        public static void Map(CliCommand instance, string[] arguments, IEnumerable<string> options)
         {
             var properties = new HashSet<PropertyInfo>(instance.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public));
 
@@ -47,16 +47,21 @@ namespace NPlant.Console
                 }
             }
 
-            foreach (var property in properties.Where(x => x.HasAttribute<ArgumentAttribute>()))
+            foreach (var property in properties.Where(x => x.HasAttribute<CliArgumentAttribute>()))
             {
-                var attributes = property.GetAttributesOf<ArgumentAttribute>();
-
-                var order = attributes[0].Order;
+                var attribute = property.GetAttributesOf<CliArgumentAttribute>()[0];
+                var order = attribute.Order;
+                var allowed = attribute.Allowed;
 
                 if (order > arguments.Length)
                     throw new NPlantConsoleUsageException($"Command argument requirements could not be satisfied - Argument in position {order} was not found.");
 
-                property.SetConvertedValue(instance, arguments[order - 1]);
+                string argumentValue = arguments[order - 1];
+
+                if (allowed != null && allowed.All(x => x != argumentValue))
+                    throw new NPlantConsoleUsageException($"Unexpected argument value '{argumentValue}' in position {order} - expected one of the following:  {string.Join(", ", allowed)}");
+
+                property.SetConvertedValue(instance, argumentValue);
             }
         }
     }

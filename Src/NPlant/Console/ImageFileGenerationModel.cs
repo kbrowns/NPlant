@@ -6,9 +6,6 @@ namespace NPlant.Console
     {
         public ImageFileGenerationModel(string diagramText, string diagramName, string javaPath, string jarPath)
         {
-            if(javaPath.IsNullOrEmpty())
-                javaPath = ConsoleEnvironment.GetSettings().JavaPath;
-
             this.JavaPath = javaPath;
             this.DiagramText = diagramText;
             this.DiagramName = diagramName;
