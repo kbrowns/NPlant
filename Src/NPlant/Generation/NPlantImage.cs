@@ -67,9 +67,7 @@ namespace NPlant.Generation
             }
             catch (Exception ex)
             {
-                Logger("Unhandled exception occurred while invoking plantuml: " + ex);
-
-                if (ex.IsDontMessWithMeException())
+                if (ex.IsFallingKnife())
                     throw;
 
                 string message = CreateException(ex);

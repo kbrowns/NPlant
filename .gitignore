@@ -26,3 +26,4 @@ plant-uml-class.pdf
 .vs/
 .vscode/
 *.jar
+**/obj/

@@ -470,7 +470,7 @@ public static class ImageExtensionMethods
 
 public static class ExceptionExtensionMethods
 {
-    public static bool IsDontMessWithMeException(this Exception exception)
+    public static bool IsFallingKnife(this Exception exception)
     {
         while (exception != null)
         {
