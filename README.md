@@ -1,3 +1,10 @@
+current status:
+[![Build status](https://ci.appveyor.com/api/projects/status/daawm30std353iol?svg=true)](https://ci.appveyor.com/project/kbrowns/nplant)
+
+branch status:
+[![Build status](https://ci.appveyor.com/api/projects/status/daawm30std353iol/branch/master?svg=true)](https://ci.appveyor.com/project/kbrowns/nplant/branch/master)
+
+
 ## Welcome
 Welcome to NPlant.  NPlant is intended to be a FluentAPI in C# for creating UML diagrams.  The "N" is 
 for .NET and the "Plant" is for PlantUML.  PlantUML is a textual DSL for UML.  It is extremely powerful and 
