@@ -1,4 +1,4 @@
-master: [![Build status](https://ci.appveyor.com/api/projects/status/daawm30std353iol/branch/master?svg=true)](https://ci.appveyor.com/project/kbrowns/nplant/branch/master) features: [![Build status](https://ci.appveyor.com/api/projects/status/daawm30std353iol?svg=true)](https://ci.appveyor.com/project/kbrowns/nplant)
+[![Build status](https://ci.appveyor.com/api/projects/status/daawm30std353iol/branch/master?svg=true)](https://ci.appveyor.com/project/kbrowns/nplant/branch/master) [![Build status](https://ci.appveyor.com/api/projects/status/daawm30std353iol?svg=true)](https://ci.appveyor.com/project/kbrowns/nplant)
 
 
 
