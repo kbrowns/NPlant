@@ -16,7 +16,7 @@ namespace NPlant.Tests.Console
             UriBuilder uri = new UriBuilder(codeBase);
 
             command.Assembly = Uri.UnescapeDataString(uri.Path);
-            Assert.That(command.Run(), Is.EqualTo(10));
+            Assert.That(command.Run(), Is.EqualTo(0));
         }
     }
 }
