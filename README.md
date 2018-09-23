@@ -1,8 +1,5 @@
-current status:
-[![Build status](https://ci.appveyor.com/api/projects/status/daawm30std353iol?svg=true)](https://ci.appveyor.com/project/kbrowns/nplant)
+master: [![Build status](https://ci.appveyor.com/api/projects/status/daawm30std353iol/branch/master?svg=true)](https://ci.appveyor.com/project/kbrowns/nplant/branch/master) features: [![Build status](https://ci.appveyor.com/api/projects/status/daawm30std353iol?svg=true)](https://ci.appveyor.com/project/kbrowns/nplant)
 
-branch status:
-[![Build status](https://ci.appveyor.com/api/projects/status/daawm30std353iol/branch/master?svg=true)](https://ci.appveyor.com/project/kbrowns/nplant/branch/master)
 
 
 ## Welcome
