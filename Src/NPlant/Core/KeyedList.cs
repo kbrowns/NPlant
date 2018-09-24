@@ -1,40 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using NPlant.MetaModel.ClassDiagraming;
 
 namespace NPlant.Core
 {
+    public interface IKeyedItem
+    {
+        string Key { get; }
+    }
+
     public class KeyedList<T> : IEnumerable<T>
         where T : class, IKeyedItem
     {
-        private readonly IList<T> _innerList = new List<T>();
+        private readonly Dictionary<string, T> _innerList = new Dictionary<string, T>();
 
-        public int Count
-        {
-            get { return _innerList.Count; }
-        }
+        public int Count => _innerList.Count;
 
         public void Add(T item)
         {
             item.CheckForNullArg("item");
-
-            T existingItem = FindItem(item.Key);
-
-            if (existingItem != null)
-                _innerList.Remove(existingItem);
-
-            _innerList.Add(item);
-        }
-
-        private T FindItem(string key)
-        {
-            return _innerList.FirstOrDefault(innerItem => key == innerItem.Key);
+            _innerList[item.Key] = item;
         }
 
         public bool TryGetValue(string key, out T item)
         {
-            item = this.FindItem(key);
+            item = null;
+
+            if (_innerList.ContainsKey(key))
+                item = _innerList[key];
 
             return item != null;
         }
@@ -43,10 +36,8 @@ namespace NPlant.Core
         {
             item = null;
 
-            if (index.IsWithin(0, _innerList.Count - 1))
-            {
-                item = _innerList[index];
-            }
+            if (index.IsWithin(0, _innerList.Keys.Count - 1))
+                item = _innerList.Values.ToArray()[index];
 
             return item != null;
         }
@@ -71,9 +62,7 @@ namespace NPlant.Core
         {
             get
             {
-                T item;
-
-                if (this.TryGetValue(key, out item))
+                if (this.TryGetValue(key, out var item))
                     return item;
 
                 if(throwOnNotFound)
@@ -81,7 +70,7 @@ namespace NPlant.Core
 
                 return default(T);
             }
-            set { this.Add(value); }
+            set => Add(value);
         }
 
         public void AddRange(T item, params T[] others)
@@ -96,22 +85,19 @@ namespace NPlant.Core
 
         public void AddRange(IEnumerable<T> items)
         {
+            // ReSharper disable once PossibleMultipleEnumeration
             items.CheckForNullArg("items");
 
+            // ReSharper disable once PossibleMultipleEnumeration
             foreach (var item in items)
             {
                 this.Add(item);
             }
         }
 
-        public bool ContainsKey(string key)
-        {
-            return _innerList.Any(innerItem => key == innerItem.Key);
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
-            return _innerList.GetEnumerator();
+            return _innerList.Values.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -121,12 +107,7 @@ namespace NPlant.Core
 
         public bool Contains(T child)
         {
-            return _innerList.Contains(child);
+            return _innerList.Values.Contains(child);
         }
-    }
-
-    public interface IKeyedItem
-    {
-        string Key { get; }
     }
 }
